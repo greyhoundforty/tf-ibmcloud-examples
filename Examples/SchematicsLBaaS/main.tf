@@ -132,8 +132,8 @@ resource "ibm_compute_vm_instance" "host4" {
 resource "ibm_lbaas" "lbaas" {
   name        = "terraformLB"
   description = "testing schematics with lbaas"
-  subnets     = [1445163]
-  datacenter  = "dal13"
+  subnets     = [1892939]
+  datacenter  = "wdc07"
 
   protocols = [
     {
@@ -147,20 +147,20 @@ resource "ibm_lbaas" "lbaas" {
 
   server_instances = [
     {
-      "private_ip_address" = "${ibm_compute_vm_instance.vm_instances.host1.ipv4_address_private}"
+      "private_ip_address" = "${ibm_compute_vm_instance.host1.ipv4_address_private}"
     },
     {
-      "private_ip_address" = "${ibm_compute_vm_instance.vm_instances.host2.ipv4_address_private}"
+      "private_ip_address" = "${ibm_compute_vm_instance.host2.ipv4_address_private}"
     },
     {
-      "private_ip_address" = "${ibm_compute_vm_instance.vm_instances.host3.ipv4_address_private}"
+      "private_ip_address" = "${ibm_compute_vm_instance.host3.ipv4_address_private}"
     },
     {
-      "private_ip_address" = "${ibm_compute_vm_instance.vm_instances.host4.ipv4_address_private}"
+      "private_ip_address" = "${ibm_compute_vm_instance.host4.ipv4_address_private}"
     },
   ]
 }
 
 output "lb_id" {
-    value = ["${ibm_lbaas.lbaas.id}"]
+    value = ["${ibm_lbaas.lbaas.vip}"]
 }
