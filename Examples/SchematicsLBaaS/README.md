@@ -15,3 +15,9 @@ export TF_VAR_slusername="YOUR_SOFTLAYER_USERNAME"
 export TF_VAR_slapikey="YOUR_SOFTLAYER_API_KEY"
 ```
 
+## Updating the `main.tf` file
+You will need to update the following items in the `main.tf` file before you attempt to use it:
+
+- The name and label of the SSH Key. In my example file the SSHKey is named `terra`. 
+- The domain name for your VSI instances. In my example I am using one of my test domains `cde.services`
+
