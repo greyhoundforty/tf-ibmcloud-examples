@@ -10,18 +10,10 @@ variable bxapikey {}
 # https://ibm-bluemix.github.io/tf-ibm-docs/
 ##############################################################################
 # Configure the IBM Cloud Provider
-provider "ibm5" {
+provider "ibm" {
   bluemix_api_key    = "${var.bxapikey}"
   softlayer_username = "${var.slusername}"
   softlayer_api_key  = "${var.slapikey}"
-}
-
-#############################################################################
-# Require terraform 0.9.3 or greater to run this template
-# https://www.terraform.io/docs/configuration/terraform.html
-#############################################################################
-terraform {
-  required_version = ">= 0.9.3"
 }
 
 data "ibm_compute_ssh_key" "terra" {
@@ -33,7 +25,7 @@ resource "ibm_compute_vm_instance" "host1" {
     hostname = "host1"
     domain = "cde.services"
     os_reference_code = "UBUNTU_LATEST_64"
-    datacenter = "wdc07"
+    datacenter = "wdc04"
     network_speed = 1000
     hourly_billing = true
     private_network_only = true 
@@ -41,6 +33,7 @@ resource "ibm_compute_vm_instance" "host1" {
     memory = 4096
     disks = [100]
     local_disk = false
+    private_vlan_id = 2161139
     ssh_key_ids = ["${data.ibm_compute_ssh_key.terra.id}"]
     provisioner "file" {
     source      = "postinstall.sh"
@@ -58,7 +51,7 @@ resource "ibm_compute_vm_instance" "host2" {
     hostname = "host2"
     domain = "cde.services"
     os_reference_code = "UBUNTU_LATEST_64"
-    datacenter = "wdc07"
+    datacenter = "wdc04"
     network_speed = 1000
     hourly_billing = true
     private_network_only = true 
@@ -66,6 +59,7 @@ resource "ibm_compute_vm_instance" "host2" {
     memory = 4096
     disks = [100]
     local_disk = false
+    private_vlan_id = 2161139
     ssh_key_ids = ["${data.ibm_compute_ssh_key.terra.id}"]
     provisioner "file" {
     source      = "postinstall.sh"
@@ -83,7 +77,7 @@ resource "ibm_compute_vm_instance" "host3" {
     hostname = "host3"
     domain = "cde.services"
     os_reference_code = "UBUNTU_LATEST_64"
-    datacenter = "wdc07"
+    datacenter = "wdc04"
     network_speed = 1000
     hourly_billing = true
     private_network_only = true 
@@ -91,6 +85,7 @@ resource "ibm_compute_vm_instance" "host3" {
     memory = 4096
     disks = [100]
     local_disk = false
+    private_vlan_id = 2161139
     ssh_key_ids = ["${data.ibm_compute_ssh_key.terra.id}"]
     provisioner "file" {
     source      = "postinstall.sh"
@@ -105,10 +100,10 @@ resource "ibm_compute_vm_instance" "host3" {
 }
 
 resource "ibm_compute_vm_instance" "host4" {
-    hostname = "dal13"
+    hostname = "host4"
     domain = "cde.services"
     os_reference_code = "UBUNTU_LATEST_64"
-    datacenter = "wdc07"
+    datacenter = "wdc04"
     network_speed = 1000
     hourly_billing = true
     private_network_only = true 
@@ -116,6 +111,7 @@ resource "ibm_compute_vm_instance" "host4" {
     memory = 4096
     disks = [100]
     local_disk = false
+    private_vlan_id = 2161139 
     ssh_key_ids = ["${data.ibm_compute_ssh_key.terra.id}"]
     provisioner "file" {
     source      = "postinstall.sh"
@@ -130,11 +126,9 @@ resource "ibm_compute_vm_instance" "host4" {
 }
 
 resource "ibm_lbaas" "lbaas" {
-  name        = "terraformLB"
-  description = "testing schematics with lbaas"
-  subnets     = [1892939]
-  datacenter  = "wdc07"
-
+  name        = "lbaasterraform"
+  description = "Ryan T testing schematics with lbaas"
+  subnets     = [1362063]
   protocols = [
     {
       frontend_protocol     = "HTTP"
