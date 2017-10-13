@@ -30,7 +30,7 @@ variable vm_memory {
 
 # The private vlan to deploy the virtual guests on to 
 variable priv_vlan { 
-  default = 2161139
+  default = 1583617
 }
 
 # The domain name for the virtual guests
@@ -52,7 +52,7 @@ data "ibm_compute_ssh_key" "sshkey" {
     label = "terra"
 }
 
-resource "ibm_compute_vm_instance" "web_node" {
+resource "ibm_compute_vm_instance" "node" {
     count = "${var.node_count}"
     hostname = "node${count.index+1}"
     domain = "${var.domainname}"
@@ -82,7 +82,7 @@ resource "ibm_compute_vm_instance" "web_node" {
 resource "ibm_lbaas" "lbaas" {
   name        = "lbaasterraform"
   description = "Testing Terraform and LBaaS"
-  subnets     = [1362063]
+  subnets     = [1445163]
   protocols = [
     {
       frontend_protocol     = "HTTP"
@@ -95,20 +95,24 @@ resource "ibm_lbaas" "lbaas" {
 
   server_instances = [
     {
-      "private_ip_address" = "${ibm_compute_vm_instance.web_node1.ipv4_address_private}"
+      "private_ip_address" = "${ibm_compute_vm_instance.node.0.ipv4_address_private}"
     },
     {
-      "private_ip_address" = "${ibm_compute_vm_instance.web_node2.ipv4_address_private}"
+      "private_ip_address" = "${ibm_compute_vm_instance.node.1.ipv4_address_private}"
     },
     {
-      "private_ip_address" = "${ibm_compute_vm_instance.web_node3.ipv4_address_private}"
+      "private_ip_address" = "${ibm_compute_vm_instance.node.2.ipv4_address_private}"
     },
     {
-      "private_ip_address" = "${ibm_compute_vm_instance.web_node4.ipv4_address_private}"
+      "private_ip_address" = "${ibm_compute_vm_instance.node.3.ipv4_address_private}"
     },
   ]
 }
 
 output "lb_id" {
     value = ["${ibm_lbaas.lbaas.vip}"]
+}
+
+output "nodes" { 
+    value = ["${ibm_compute_vm_instance.node.ipv4_address_private}"]
 }
