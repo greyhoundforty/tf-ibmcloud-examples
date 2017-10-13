@@ -1,118 +1,72 @@
-##############################################################################
-# Variables
-##############################################################################
-# Required for the IBM Cloud provider for Bluemix resources
+# Softlayer username
 variable slusername {}
+
+# SoftLayer API key
 variable slapikey {}
-variable bxapikey {}
+
+# The datacenter to deploy to
+variable datacenter {
+  default = "dal13"
+}
+
+# The number of web nodes to deploy
+variable node_count {
+  default = 4
+}
+
+# The target operating system for the web nodes
+variable os {
+  default = "UBUNTU_LATEST_64"
+}
+
+# The number of cores each web virtual guest will recieve
+variable vm_cores {
+  default = 1
+}
+# The amount of memory each web virtual guest will recieve
+variable vm_memory {
+  default = 2048
+}
+
+# The private vlan to deploy the virtual guests on to 
+variable priv_vlan { 
+  default = 2161139
+}
+
+# The domain name for the virtual guests
+variable domainname { 
+  default = "cde.services"
+}
+
 ##############################################################################
 # Configures the IBM Cloud provider
 # https://ibm-bluemix.github.io/tf-ibm-docs/
 ##############################################################################
 # Configure the IBM Cloud Provider
 provider "ibm" {
-  bluemix_api_key    = "${var.bxapikey}"
   softlayer_username = "${var.slusername}"
   softlayer_api_key  = "${var.slapikey}"
 }
 
-data "ibm_compute_ssh_key" "terra" {
+data "ibm_compute_ssh_key" "sshkey" {
     label = "terra"
 }
 
-
-resource "ibm_compute_vm_instance" "host1" {
-    hostname = "host1"
-    domain = "cde.services"
-    os_reference_code = "UBUNTU_LATEST_64"
-    datacenter = "wdc04"
+resource "ibm_compute_vm_instance" "web_node" {
+    count = "${var.node_count}"
+    hostname = "node${count.index+1}"
+    domain = "${var.domainname}"
+    os_reference_code = "${var.os}"
+    datacenter = "${var.datacenter}"
     network_speed = 1000
     hourly_billing = true
     private_network_only = true 
-    cores = 2
-    memory = 4096
+    cores = "${var.vm_cores}"
+    memory = "${var.vm_memory}"
     disks = [100]
     local_disk = false
-    private_vlan_id = 2161139
-    ssh_key_ids = ["${data.ibm_compute_ssh_key.terra.id}"]
-    provisioner "file" {
-    source      = "postinstall.sh"
-    destination = "/tmp/postinstall.sh"
-    }
-    provisioner "remote-exec" {
-    inline = [
-      "chmod +x /tmp/postinstall.sh",
-      "/tmp/postinstall.sh",
-    ]
-    }
-}
-
-resource "ibm_compute_vm_instance" "host2" {
-    hostname = "host2"
-    domain = "cde.services"
-    os_reference_code = "UBUNTU_LATEST_64"
-    datacenter = "wdc04"
-    network_speed = 1000
-    hourly_billing = true
-    private_network_only = true 
-    cores = 2
-    memory = 4096
-    disks = [100]
-    local_disk = false
-    private_vlan_id = 2161139
-    ssh_key_ids = ["${data.ibm_compute_ssh_key.terra.id}"]
-    provisioner "file" {
-    source      = "postinstall.sh"
-    destination = "/tmp/postinstall.sh"
-    }
-    provisioner "remote-exec" {
-    inline = [
-      "chmod +x /tmp/postinstall.sh",
-      "/tmp/postinstall.sh",
-    ]
-    }
-}
-
-resource "ibm_compute_vm_instance" "host3" {
-    hostname = "host3"
-    domain = "cde.services"
-    os_reference_code = "UBUNTU_LATEST_64"
-    datacenter = "wdc04"
-    network_speed = 1000
-    hourly_billing = true
-    private_network_only = true 
-    cores = 2
-    memory = 4096
-    disks = [100]
-    local_disk = false
-    private_vlan_id = 2161139
-    ssh_key_ids = ["${data.ibm_compute_ssh_key.terra.id}"]
-    provisioner "file" {
-    source      = "postinstall.sh"
-    destination = "/tmp/postinstall.sh"
-    }
-    provisioner "remote-exec" {
-    inline = [
-      "chmod +x /tmp/postinstall.sh",
-      "/tmp/postinstall.sh",
-    ]
-    }
-}
-
-resource "ibm_compute_vm_instance" "host4" {
-    hostname = "host4"
-    domain = "cde.services"
-    os_reference_code = "UBUNTU_LATEST_64"
-    datacenter = "wdc04"
-    network_speed = 1000
-    hourly_billing = true
-    private_network_only = true 
-    cores = 2
-    memory = 4096
-    disks = [100]
-    local_disk = false
-    private_vlan_id = 2161139 
-    ssh_key_ids = ["${data.ibm_compute_ssh_key.terra.id}"]
+    private_vlan_id = "${var.priv_vlan}"
+    ssh_key_ids = ["${data.ibm_compute_ssh_key.sshkey.id}"]
     provisioner "file" {
     source      = "postinstall.sh"
     destination = "/tmp/postinstall.sh"
@@ -127,7 +81,7 @@ resource "ibm_compute_vm_instance" "host4" {
 
 resource "ibm_lbaas" "lbaas" {
   name        = "lbaasterraform"
-  description = "Ryan T testing schematics with lbaas"
+  description = "Testing Terraform and LBaaS"
   subnets     = [1362063]
   protocols = [
     {
@@ -141,16 +95,16 @@ resource "ibm_lbaas" "lbaas" {
 
   server_instances = [
     {
-      "private_ip_address" = "${ibm_compute_vm_instance.host1.ipv4_address_private}"
+      "private_ip_address" = "${ibm_compute_vm_instance.web_node1.ipv4_address_private}"
     },
     {
-      "private_ip_address" = "${ibm_compute_vm_instance.host2.ipv4_address_private}"
+      "private_ip_address" = "${ibm_compute_vm_instance.web_node2.ipv4_address_private}"
     },
     {
-      "private_ip_address" = "${ibm_compute_vm_instance.host3.ipv4_address_private}"
+      "private_ip_address" = "${ibm_compute_vm_instance.web_node3.ipv4_address_private}"
     },
     {
-      "private_ip_address" = "${ibm_compute_vm_instance.host4.ipv4_address_private}"
+      "private_ip_address" = "${ibm_compute_vm_instance.web_node4.ipv4_address_private}"
     },
   ]
 }
