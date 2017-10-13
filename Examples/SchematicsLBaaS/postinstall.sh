@@ -7,6 +7,7 @@ update_sys() {
 apt-get update 
 apt-get upgrade -y 
 apt-get install apache2 -y 
+echo $(hostname -f) > /var/www/html/index.html
 } >> "$installerlog" 2>&1
 
 update_sys
