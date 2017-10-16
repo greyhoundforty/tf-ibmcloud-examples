@@ -55,6 +55,7 @@ n4privIP=$(/usr/local/bin/slcli call-api Virtual_Guest getPrimaryBackendIpAddres
 
 ## Install minio binary and create default files
 setup_minio() { 
+wget -O /usr/local/bin/minio https://dl.minio.io/server/minio/release/linux-amd64/minio
 chmod +x /usr/local/bin/minio
 hostip=$(curl -s https://api.service.softlayer.com/rest/v3/SoftLayer_Resource_Metadata/getPrimaryBackendIpAddress | cut -d '"' -f2)
 
@@ -79,6 +80,7 @@ chown minio-user:minio-user /storage
 
 mkdir /etc/minio
 chown minio-user:minio-user /etc/minio
+wget -O /etc/systemd/system/minio.service https://raw.githubusercontent.com/minio/minio-service/master/linux-systemd/distributed/minio.service
 
 systemctl enable minio.service
 } >> "$installerlog" 2>&1

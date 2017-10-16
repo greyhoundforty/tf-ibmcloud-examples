@@ -32,6 +32,11 @@ variable vm_memory {
   default = 2048
 }
 
+# The public vlan to deploy the virtual guests on to
+variable pub_vlan {
+  default = 1583615
+}
+
 # The private vlan to deploy the virtual guests on to
 variable priv_vlan {
   default = 1583617
@@ -63,11 +68,12 @@ resource "ibm_compute_vm_instance" "node" {
     datacenter = "${var.datacenter}"
     network_speed = 1000
     hourly_billing = true
-    private_network_only = true
+    private_network_only = false
     cores = "${var.vm_cores}"
     memory = "${var.vm_memory}"
     disks = [100, 2000, 2000, 2000, 2000]
     local_disk = false
+    public_vlan_id = "${var.pub_vlan}"
     private_vlan_id = "${var.priv_vlan}"
     user_metadata = "{\"MINIO_ACCESS_KEY=${var.accesskey}\" : \"MINIO_SECRET_KEY=${var.secretkey}\" : \"SOFTLAYER_USERNAME=${var.slusername}\" : \"SOFTLAYER_API_KEY=${var.slapikey}\"}"
     ssh_key_ids = ["${data.ibm_compute_ssh_key.terra.id}"]
@@ -78,14 +84,6 @@ resource "ibm_compute_vm_instance" "node" {
     provisioner "file" {
     source      = "postinstall.sh"
     destination = "/tmp/postinstall.sh"
-    }
-    provisioner "file" {
-    source      = "minio"
-    destination = "/usr/local/bin/minio"
-    }
-    provisioner "file" {
-    source      = "minio.service"
-    destination = "/etc/systemd/system/minio.service"
     }
     provisioner "remote-exec" {
     inline = [
@@ -111,6 +109,9 @@ resource "ibm_lbaas" "lbaas" {
 
   server_instances = [
     {
+      "private_ip_address" = "${ibm_compute_vm_instance.node.0.ipv4_address_private}"
+    },
+    {
       "private_ip_address" = "${ibm_compute_vm_instance.node.1.ipv4_address_private}"
     },
     {
@@ -118,9 +119,6 @@ resource "ibm_lbaas" "lbaas" {
     },
     {
       "private_ip_address" = "${ibm_compute_vm_instance.node.3.ipv4_address_private}"
-    },
-    {
-      "private_ip_address" = "${ibm_compute_vm_instance.node.4.ipv4_address_private}"
     },
   ]
 }
