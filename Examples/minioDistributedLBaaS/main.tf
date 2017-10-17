@@ -94,7 +94,7 @@ resource "ibm_compute_vm_instance" "node" {
 }
 
 resource "ibm_lbaas" "lbaas" {
-  name        = "minioLB"
+  name        = "minioLBtesting"
   description = "Testing Terraform, LBaaS and minio"
   subnets     = [1445163]
   protocols = [
