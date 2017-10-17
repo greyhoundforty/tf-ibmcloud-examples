@@ -30,8 +30,8 @@ export TF_VAR_secretkey="$VALUE"
 
 You will need to update the following items in the main.tf file before you attempt to use it:
 
-Line 36: Public Vlan ID
-Line 41: Private Vlan ID
-Line 47: Domain name for Virtual Guests
-Line 60: The label of the SSH for the server you will be deploying from.
-Line 99: The Subnet ID to bind the Load Balancer to.
+- Line 36: Public Vlan ID
+- Line 41: Private Vlan ID
+- Line 47: Domain name for Virtual Guests
+- Line 60: The label of the SSH for the server you will be deploying from.
+- Line 99: The Subnet ID to bind the Load Balancer to.
