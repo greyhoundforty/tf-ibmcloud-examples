@@ -42,10 +42,10 @@ sed -i "s/SOFTLAYER_APIKEY/$SL_API/g" $HOME/.softlayer
 grab_ips() {
 
 hostip=$(curl -s https://api.service.softlayer.com/rest/v3/SoftLayer_Resource_Metadata/getPrimaryBackendIpAddress | cut -d '"' -f2)
-n1id=$(/usr/local/bin/slcli --format raw vs list -H node1 -D cde.services -d dal13 | awk '{print $1}')
-n2id=$(/usr/local/bin/slcli --format raw vs list -H node2 -D cde.services -d dal13 | awk '{print $1}')
-n3id=$(/usr/local/bin/slcli --format raw vs list -H node3 -D cde.services -d dal13 | awk '{print $1}')
-n4id=$(/usr/local/bin/slcli --format raw vs list -H node4 -D cde.services -d dal13 | awk '{print $1}')
+n1id=$(/usr/local/bin/slcli --format raw vs list -H node1 -D cde.services -d wdc07 | awk '{print $1}')
+n2id=$(/usr/local/bin/slcli --format raw vs list -H node2 -D cde.services -d wdc07 | awk '{print $1}')
+n3id=$(/usr/local/bin/slcli --format raw vs list -H node3 -D cde.services -d wdc07 | awk '{print $1}')
+n4id=$(/usr/local/bin/slcli --format raw vs list -H node4 -D cde.services -d wdc07 | awk '{print $1}')
 
 n1privIP=$(/usr/local/bin/slcli call-api Virtual_Guest getPrimaryBackendIpAddress --id="$n1id")
 n2privIP=$(/usr/local/bin/slcli call-api Virtual_Guest getPrimaryBackendIpAddress --id="$n2id")

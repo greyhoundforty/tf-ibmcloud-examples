@@ -35,3 +35,9 @@ You will need to update the following items in the main.tf file before you attem
 - Line 47: Domain name for Virtual Guests
 - Line 60: The label of the SSH for the server you will be deploying from.
 - Line 99: The Subnet ID to bind the Load Balancer to.
+
+## Updating the postinstall.sh file
+
+You will need to update the following lines in the postinstall.sh file before you use it
+
+- Lines 45-48: Update the Datacenter shortname. In this example I am using `wdc07`

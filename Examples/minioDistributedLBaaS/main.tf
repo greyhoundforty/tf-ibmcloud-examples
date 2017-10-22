@@ -10,7 +10,7 @@ variable secretkey {}
 
 # The datacenter to deploy to
 variable datacenter {
-  default = "dal13"
+  default = "wdc07"
 }
 
 # The number of web nodes to deploy
@@ -34,12 +34,12 @@ variable vm_memory {
 
 # The public vlan to deploy the virtual guests on to
 variable pub_vlan {
-  default = 1583615
+  default = 1892917
 }
 
 # The private vlan to deploy the virtual guests on to
 variable priv_vlan {
-  default = 1583617
+  default = 1892939
 }
 
 # The domain name for the virtual guests
@@ -94,9 +94,9 @@ resource "ibm_compute_vm_instance" "node" {
 }
 
 resource "ibm_lbaas" "lbaas" {
-  name        = "minioLBtesting"
+  name        = "lbaasminio"
   description = "Testing Terraform, LBaaS and minio"
-  subnets     = [1445163]
+  subnets     = [1550219]
   protocols = [
     {
       frontend_protocol     = "TCP"
