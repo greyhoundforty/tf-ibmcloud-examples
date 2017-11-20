@@ -1,1 +1,10 @@
-# tf-ibmcloud-examples
+# Terraform and IBM Cloud examples
+This repo contains some examples I have put together to use Terraform and the [IBM Cloud Terraform Provider](https://ibm-bluemix.github.io/tf-ibm-docs/index.html) plugin. Most examples are using the (at current time) latest 0.5.0 version of the provider plugin. 
+
+## Simple web server with LBaaS
+Deploys 4 private network Virtual Guests running apache as well as an [IBM Cloud Load Balancer](https://console.bluemix.net/docs/infrastructure/loadbalancer-service/basic-load-balancing.html#basic-load-balancing) to distribute the traffic between the nodes. 
+
+## Distributed Minio cluster with LBaaS
+Deploys 4 Virtual Guests running a [Distributed Minio Cluster](https://docs.minio.io/docs/distributed-minio-quickstart-guide) as well as an [IBM Cloud Load Balancer](https://console.bluemix.net/docs/infrastructure/loadbalancer-service/basic-load-balancing.html#basic-load-balancing) to distribute the traffic between the nodes. 
+
+## More to come

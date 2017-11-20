@@ -8,3 +8,5 @@
 # Uneeded module and log file 
 Examples/SchematicsLBaaS/terraform.d/
 Examples/SchematicsLBaaS/nohup.out
+Examples/minioDistributedLBaaS/terraform.d/
+Examples/minioDistributedLBaaS/nohup.out
