@@ -11,7 +11,7 @@ variable datacenter {
 
 # The number of web nodes to deploy
 variable node_count {
-  default = 4
+  default = 2
 }
 
 # The target operating system for the web nodes
@@ -33,6 +33,10 @@ variable priv_vlan {
   default = 1583617
 }
 
+variable pub_vlan { 
+  default = 1583615
+}
+
 # The domain name for the virtual guests
 variable domainname { 
   default = "cde.services"
@@ -49,7 +53,7 @@ provider "ibm" {
 }
 
 data "ibm_compute_ssh_key" "sshkey" {
-    label = "terra"
+    label = "tycho"
 }
 
 resource "ibm_compute_vm_instance" "node" {
@@ -60,11 +64,12 @@ resource "ibm_compute_vm_instance" "node" {
     datacenter = "${var.datacenter}"
     network_speed = 1000
     hourly_billing = true
-    private_network_only = true 
+    private_network_only = false 
     cores = "${var.vm_cores}"
     memory = "${var.vm_memory}"
     disks = [100]
     local_disk = false
+    public_vlan_id = "${var.pub_vlan}"
     private_vlan_id = "${var.priv_vlan}"
     ssh_key_ids = ["${data.ibm_compute_ssh_key.sshkey.id}"]
     provisioner "file" {
@@ -99,12 +104,6 @@ resource "ibm_lbaas" "lbaas" {
     },
     {
       "private_ip_address" = "${ibm_compute_vm_instance.node.1.ipv4_address_private}"
-    },
-    {
-      "private_ip_address" = "${ibm_compute_vm_instance.node.2.ipv4_address_private}"
-    },
-    {
-      "private_ip_address" = "${ibm_compute_vm_instance.node.3.ipv4_address_private}"
     },
   ]
 }

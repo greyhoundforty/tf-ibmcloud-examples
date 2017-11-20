@@ -111,6 +111,9 @@ resource "ibm_lbaas" "lbaas" {
 
   server_instances = [
     {
+      "private_ip_address" = "${ibm_compute_vm_instance.node.0.ipv4_address_private}"
+    },
+    {
       "private_ip_address" = "${ibm_compute_vm_instance.node.1.ipv4_address_private}"
     },
     {
@@ -118,9 +121,6 @@ resource "ibm_lbaas" "lbaas" {
     },
     {
       "private_ip_address" = "${ibm_compute_vm_instance.node.3.ipv4_address_private}"
-    },
-    {
-      "private_ip_address" = "${ibm_compute_vm_instance.node.4.ipv4_address_private}"
     },
   ]
 }
