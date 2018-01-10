@@ -1,4 +1,18 @@
-# Terraform and IBM Cloud examples
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+- [Terraform and IBM Cloud examples](#terraform-and-ibm-cloud-examples)
+    - [Simple web server with LBaaS](#simple-web-server-with-lbaas)
+    - [Distributed Minio cluster with LBaaS](#distributed-minio-cluster-with-lbaas)
+    - [Security Groups](#security-groups)
+    - [more to come](#more-to-come)
+    - [Todo/Improvements](#todoimprovements)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
+Terraform and IBM Cloud examples
+================================
+
 This repo contains some examples I have put together to use Terraform and the [IBM Cloud Terraform Provider](https://ibm-bluemix.github.io/tf-ibm-docs/index.html) plugin. Most examples are using the (at current time) latest 0.5.0 version of the provider plugin. 
 
 ## Simple web server with LBaaS

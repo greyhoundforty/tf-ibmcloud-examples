@@ -1,3 +1,12 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+- [LBaaS Terraform Example](#lbaas-terraform-example)
+- [Pre-Requisites](#pre-requisites)
+- [Updating the `main.tf` file](#updating-the-maintf-file)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ## LBaaS Terraform Example
 
 This example shows how to deploy 4 private network Virtual Guests running Apache and then create an [IBM Public Load Balancer](https://www.ibm.com/blogs/bluemix/2017/09/ibm-cloud-bluemix-load-balancer/) and bind the 4 VSIs to the Load Balancer.

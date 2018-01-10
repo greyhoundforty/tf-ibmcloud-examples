@@ -1,3 +1,13 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [Deploying a distributed minio cluster with an LBaaS Frontend](#deploying-a-distributed-minio-cluster-with-an-lbaas-frontend)
+- [Updating the main.tf file](#updating-the-maintf-file)
+- [Updating the postinstall.sh file](#updating-the-postinstallsh-file)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ## Deploying a distributed minio cluster with an LBaaS Frontend
 
 This example will spin up a 4 Node Distributed Minio cluster with an [IBM Public Load Balancer](https://console.bluemix.net/docs/infrastructure/loadbalancer-service/about.html#about) in front of it to distribute the traffic. To use this example you need to have at least v0.5.0 of the [IBM Cloud Terraform Provider](https://github.com/IBM-Bluemix/terraform-provider-ibm/releases) binary installed. You will also need a `~/.terraformrc` file that points to the location of the IBM Cloud Terraform binary. In my system I put the binary at `/usr/local/bin/terraform-provider-ibm` so my `~/.terraformrc` file looks like this:
