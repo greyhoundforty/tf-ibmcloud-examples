@@ -29,4 +29,4 @@ This example creates a security group with 3 rules to allow SSH access to a new 
 
 ## Todo/Improvements
 
-Listed out in the included [Taskpaper file](tf-ibmcloud-examples.taskpaper) 
+Listed out in the included [Taskpaper file](tf-ibm-cloud.taskpaper) 
