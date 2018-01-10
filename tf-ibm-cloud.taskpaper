@@ -1,11 +1,11 @@
 Inbox:
-tf-ibmcloud-examples:
+tf-ibm-cloud:
 	Todos:
-		- Add a `configure.sh` script to *tf-ibm-lbaas* that will prompt and then sed replace the `main.tf` file
-		- Seperate out variables in to seperate `vars.tf` files for each example 
+		- Add a `configure.sh` script to *tf-ibm-lbaas* that will prompt and then sed replace the `main.tf` file @na
+		- Seperate out variables in to seperate `vars.tf` files for each example @na
 		- Add a `configure.sh` script to *tf-ibm-minio-lbaas* that will prompt and then sed replace the `main.tf` file
 		- Seperate out variables in to seperate `vars.tf` files for tf-ibm-minio-lbaas
-		-  Add a `configure.sh` script to *tf-ibm-vsi-securitygroups* that will prompt and then sed replace the `main.tf` file
+		- Add a `configure.sh` script to *tf-ibm-vsi-securitygroups* that will prompt and then sed replace the `main.tf` file
 		- Seperate out variables in to seperate `vars.tf` files for tf-ibm-vsi-securitygroups
 	Ideas:
 Archive:
