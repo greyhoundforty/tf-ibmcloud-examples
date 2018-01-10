@@ -11,3 +11,8 @@ Deploys 4 Virtual Guests running a [Distributed Minio Cluster](https://docs.mini
 This example creates a security group with 3 rules to allow SSH access to a new VSI from 3 different locations. Relies on the updated [v0.6.0](https://github.com/IBM-Bluemix/terraform-provider-ibm/releases/tag/v0.6.0) IBM Cloud Provider plugin. 
 
 ## more to come
+
+
+## Todo/Improvements
+
+Listed out in the included [Taskpaper file](tf-ibmcloud-examples.taskpaper) 
