@@ -155,6 +155,7 @@ resource "ibm_compute_vm_instance" "dal13node" {
     network_speed = 1000
     hourly_billing = true
     private_network_only = false
+    user_metadata    = "{\"SOFTLAYER_USERNAME=${var.slusername}\" : \"SOFTLAYER_API_KEY=${var.slapikey}\"}"
     cores = "${var.vm_cores}"
     memory = "${var.vm_memory}"
     disks = [100]
@@ -162,6 +163,8 @@ resource "ibm_compute_vm_instance" "dal13node" {
     public_vlan_id   = "${var.dal13pub_vlan}"
     private_vlan_id  = "${var.dal13priv_vlan}"
     ssh_key_ids = ["${data.ibm_compute_ssh_key.sshkey.id}"]
+    depends_on = ["ibm_network_gateway.dal13tfgateway"]
+    
     provisioner "file" {
     source      = "dal13server_postinstall.sh"
     destination = "/tmp/dal13server_postinstall.sh"
