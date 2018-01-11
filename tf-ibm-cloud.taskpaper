@@ -8,6 +8,9 @@ tf-ibm-cloud:
 		- Add a `configure.sh` script to *tf-ibm-vsi-securitygroups* that will prompt and then sed replace the `main.tf` file
 		- Seperate out variables in to seperate `vars.tf` files for tf-ibm-vsi-securitygroups
 	Ideas:
+		- Use the `depends_on = ["resource.name"]` option to ensure the VRAs deploy before the VSIs. 
+			- Have the VSI post install script use metadata to set SL user and API key
+			- Install the slcli to get gateway information and route vlans 
 Archive:
 Search Definitions:
 	Top Priority @search(@priority = 5 and not @done)
