@@ -50,7 +50,7 @@ resource "ibm_network_gateway" "dal13tfgateway" {
      "/tmp/dal13create-vifs.vcli",
    ]
  }
-  
+
   provisioner "file" {
    source      = "dal13create-tunnels.vcli"
    destination = "/tmp/dal13create-tunnels.vcli"
@@ -74,9 +74,7 @@ resource "ibm_network_gateway" "dal13tfgateway" {
  } 
 }
 
-output "dal13vravlans" {
-  value = "${ibm_network_gateway.dal13tfgateway.associated_vlans}"
-}
+
 
 resource "ibm_network_gateway" "wdc07tfgateway" {
  name        = "wdc07tfgateway"
@@ -140,11 +138,13 @@ resource "ibm_network_gateway" "wdc07tfgateway" {
    inline = [
      "chmod +x /tmp/wdc07tunnelprompt.sh",
    ]
+ }
+ provisioner "local-exec" {
+  command = "touch /Users/ryan/tmp/wdc07tfgateway_public_ip.txt"
  } 
-}
-
-output "wdc07vravlans" {
-  value = "${ibm_network_gateway.wdc07tfgateway.associated_vlans}"
+ provisioner "local-exec" {
+  command = "echo ${ibm_network_gateway.wdc07tfgateway.public_ipv4_address} >> /Users/ryan/tmp/wdc07tfgateway_public_ip.txt"
+ } 
 }
 
 resource "ibm_compute_vm_instance" "dal13node" {
@@ -202,4 +202,12 @@ resource "ibm_compute_vm_instance" "wdc07node" {
       "/tmp/wdc07server_postinstall.sh",
     ]
     }
+}
+
+output "dal13vravlans" {
+  value = "${ibm_network_gateway.dal13tfgateway.associated_vlans}"
+}
+
+output "wdc07vravlans" {
+  value = "${ibm_network_gateway.wdc07tfgateway.associated_vlans}"
 }
