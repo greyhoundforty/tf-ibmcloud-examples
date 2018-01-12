@@ -72,6 +72,10 @@ resource "ibm_network_gateway" "dal13tfgateway" {
      "chmod +x /tmp/dal13tunnelprompt.sh",
    ]
  } 
+  
+ provisioner "local-exec" {
+  command = "echo ${ibm_network_gateway.dal13tfgateway.public_ipv4_address} >> $HOME/dal13tfgateway_public_ip.txt"
+ } 
 }
 
 
@@ -139,11 +143,9 @@ resource "ibm_network_gateway" "wdc07tfgateway" {
      "chmod +x /tmp/wdc07tunnelprompt.sh",
    ]
  }
+
  provisioner "local-exec" {
-  command = "touch /Users/ryan/tmp/wdc07tfgateway_public_ip.txt"
- } 
- provisioner "local-exec" {
-  command = "echo ${ibm_network_gateway.wdc07tfgateway.public_ipv4_address} >> /Users/ryan/tmp/wdc07tfgateway_public_ip.txt"
+  command = "echo ${ibm_network_gateway.wdc07tfgateway.public_ipv4_address} >> $HOME/wdc07tfgateway_public_ip.txt"
  } 
 }
 

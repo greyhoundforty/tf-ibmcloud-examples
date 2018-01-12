@@ -17,8 +17,8 @@ read -r VRA_SECRET
 
 sed -i "s|PUBLIC_PEER_IP|$VRA_PUBLIC_PEER|g" /tmp/wdc07create-tunnels.vcli 
 sed -i "s|PRIVATE_PEER_IP|$VRA_PRIVATE_PEER|g" /tmp/wdc07create-tunnels.vcli 
-sed -i "s|LOCAL_PUBLIC_PEER_IP|$VRA_PUBLIC_LOCAL_PEER|g" /tmp/wdc07create-tunnels.vcli 
-sed -i "s|LOCAL_PRIVATE_PEER_IP|$VRA_PRIVATE_LOCAL_PEER|g" /tmp/wdc07create-tunnels.vcli 
+sed -i "s|PUBLIC_LOCAL_PEER_IP|$VRA_PUBLIC_LOCAL_PEER|g" /tmp/wdc07create-tunnels.vcli 
+sed -i "s|PRIVATE_LOCAL_PEER_IP|$VRA_PRIVATE_LOCAL_PEER|g" /tmp/wdc07create-tunnels.vcli 
 sed -i "s|PASSWORD|$VRA_SECRET|g" /tmp/wdc07create-tunnels.vcli 
 
-/bin/vcli /tmp/wdc07create-tunnels.vcli
+echo -e "Now run the following command to create the ipsec tunnels:\n\n/tmp/wdc07create-tunnels.vcli\n"

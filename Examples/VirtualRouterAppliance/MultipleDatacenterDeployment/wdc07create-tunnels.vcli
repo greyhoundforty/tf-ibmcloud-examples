@@ -26,7 +26,7 @@ set security vpn ipsec site-to-site peer PRIVATE_PEER_IP authentication pre-shar
 set security vpn ipsec site-to-site peer PRIVATE_PEER_IP default-esp-group 'ESP-vRouter2Private'
 set security vpn ipsec site-to-site peer PRIVATE_PEER_IP description 'Private VPN Tunnel between vRouters'
 set security vpn ipsec site-to-site peer PRIVATE_PEER_IP ike-group 'IKE-vRouter2Private'
-set security vpn ipsec site-to-site peer PRIVATE_PEER_IP local-address 'LOCAL_PRIVATE_PEER_IP'
+set security vpn ipsec site-to-site peer PRIVATE_PEER_IP local-address 'PRIVATE_LOCAL_PEER_IP'
 set security vpn ipsec site-to-site peer PRIVATE_PEER_IP tunnel 1 local prefix '192.168.40.0/24'
 set security vpn ipsec site-to-site peer PRIVATE_PEER_IP tunnel 1 remote prefix '192.168.20.0/24'
 set security vpn ipsec site-to-site peer PUBLIC_PEER_IP authentication mode 'pre-shared-secret'
@@ -34,7 +34,7 @@ set security vpn ipsec site-to-site peer PUBLIC_PEER_IP authentication pre-share
 set security vpn ipsec site-to-site peer PUBLIC_PEER_IP default-esp-group 'ESP-vRouter2Public'
 set security vpn ipsec site-to-site peer PUBLIC_PEER_IP description 'Public VPN Tunnel between vRouters'
 set security vpn ipsec site-to-site peer PUBLIC_PEER_IP ike-group 'IKE-vRouter2Public'
-set security vpn ipsec site-to-site peer PUBLIC_PEER_IP local-address 'LOCAL_PUBLIC_PEER_IP'
+set security vpn ipsec site-to-site peer PUBLIC_PEER_IP local-address 'PUBLIC_LOCAL_PEER_IP'
 set security vpn ipsec site-to-site peer PUBLIC_PEER_IP tunnel 1 local prefix '192.168.30.0/24'
 set security vpn ipsec site-to-site peer PUBLIC_PEER_IP tunnel 1 remote prefix '192.168.10.0/24'
 if ! validate; then
