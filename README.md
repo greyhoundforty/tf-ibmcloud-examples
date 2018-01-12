@@ -24,7 +24,8 @@ Deploys 4 Virtual Guests running a [Distributed Minio Cluster](https://docs.mini
 ## Security Groups
 This example creates a security group with 3 rules to allow SSH access to a new VSI from 3 different locations. Relies on the updated [v0.6.0](https://github.com/IBM-Bluemix/terraform-provider-ibm/releases/tag/v0.6.0) IBM Cloud Provider plugin. 
 
-## more to come
+## Virtual Router Appliances (aka Vyatta's)
+This set of examples show how to use Terraform to deploy single and multi-node Virtual Router Appliances on IBM Cloud.
 
 
 ## Todo/Improvements
