@@ -1,43 +1,12 @@
-# Softlayer username
-variable slusername {}
-
-# SoftLayer API key
-variable slapikey {}
-
-# The datacenter to deploy to
-variable datacenter {
-  default = "dal13"
+provider "ibm" {
+  bluemix_api_key    = "${var.bxapikey}"
+  softlayer_username = "${var.slusername}"
+  softlayer_api_key  = "${var.slapikey}"
 }
 
-# The target operating system for the web nodes
-variable os {
-  default = "UBUNTU_LATEST_64"
+data "ibm_compute_ssh_key" "terra" {
+    label = "terra"
 }
-
-# The number of cores each web virtual guest will recieve
-variable vm_cores {
-  default = 1
-}
-# The amount of memory each web virtual guest will recieve
-variable vm_memory {
-  default = 2048
-}
-
-# The private vlan to deploy the virtual guests on to 
-variable priv_vlan { 
-  default = 1583617
-}
-
-# The public vlan to deploy the virtual guests on to 
-variable pub_vlan { 
-  default = 1583615
-}
-
-# The domain name for the virtual guests
-variable domainname { 
-  default = "cde.services"
-}
-
 
 resource "ibm_security_group" "sgterraform" {
     name = "sgterraform"
@@ -72,15 +41,6 @@ resource "ibm_security_group_rule" "allow_ssh_jumpbox" {
     protocol = "tcp"
     remote_ip = "192.168.0.300"
     security_group_id = "${ibm_security_group.sgterraform.id}"
-}
-
-provider "ibm" {
-  softlayer_username = "${var.slusername}"
-  softlayer_api_key  = "${var.slapikey}"
-}
-
-data "ibm_compute_ssh_key" "sshkey" {
-    label = "tycho"
 }
 
 resource "ibm_compute_vm_instance" "node" {
