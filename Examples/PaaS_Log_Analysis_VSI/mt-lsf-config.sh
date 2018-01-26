@@ -1,0 +1,6 @@
+# more mt-lsf-config.sh 
+LSF_INSTANCE_ID="tfloggin"
+LSF_TARGET='INGEST_URL'
+LSF_TENANT_ID='SPACE_ID'
+LSF_PASSWORD='LA_PASSWORD'
+LSF_GROUP_ID="tflogtest"
